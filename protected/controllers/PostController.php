@@ -30,28 +30,6 @@ class PostController extends Controller
         $this->echoJson($previous);
     }
 
-    public function actionCreate()
-    {
-        $model=new Post;
-
-        if(isset($_POST['ajax']) && $_POST['ajax']==='post-create-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-
-        if(isset($_POST['Post']))
-        {
-            $model->attributes=$_POST['Post'];
-            if($model->validate())
-            {
-                // form inputs are valid, do something here
-                return;
-            }
-        }
-        $this->render('create',array('model'=>$model));
-    }
-
     // Uncomment the following methods and override them if needed
     /*
     public function filters()

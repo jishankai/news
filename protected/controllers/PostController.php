@@ -16,11 +16,12 @@ class PostController extends Controller
     public function actionPosts($id=NULL)
     {
         if (isset($id)) {
-            $posts = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id=$id")->queryRow();
+            Yii::app()->theme = 'mobile';
+            $this->render('posts');
         } else {
             $posts = Yii::app()->db->createCommand("SELECT * FROM posts")->queryAll();
+            $this->echoJson($posts);
         }
-        $this->echoJson($posts);
     }
 
     public function actionPrevious($id)

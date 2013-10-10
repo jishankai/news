@@ -21,15 +21,6 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
 
-    public function init() {
-        parent::init();
-
-        $browser_detect = Yii::app()->mobiledetect;
-        if ($browser_detect->isMobile()) {
-            Yii::app()->theme = 'mobile';
-        }
-    } 
-
     public function echoJson($data=array()) {
         echo CJSON::encode($data);
     }

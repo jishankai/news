@@ -29,4 +29,8 @@ class Controller extends CController
             Yii::app()->theme = 'mobile';
         }
     } 
+
+    public function echoJson($data=array()) {
+        echo CJSON::encode($data);
+    }
 }

@@ -51,10 +51,10 @@ return array(
          */
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=tachyon',
+			'connectionString' => 'mysql:host=127.0.0.1;dbname=news',
 			'emulatePrepare' => true,
-			'username' => 'skji',
-			'password' => 'skji',
+			'username' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(

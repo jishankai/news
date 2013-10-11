@@ -17,7 +17,8 @@ class PostController extends Controller
     {
         if (isset($id)) {
             Yii::app()->theme = 'mobile';
-            $this->render('posts');
+            $post = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id=$id")->queryRow();
+            $this->render('posts', array('post'=>$post));
         } else {
             $posts = Yii::app()->db->createCommand("SELECT * FROM posts")->queryAll();
             $this->echoJson($posts);

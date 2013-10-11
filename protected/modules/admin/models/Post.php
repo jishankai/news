@@ -42,10 +42,10 @@ class Post extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, created_at, updated_at', 'required'),
+			array('title, outline, author', 'required'),
 			array('id, price', 'length', 'max'=>10),
-			array('title, author, category, file', 'length', 'max'=>255),
-			array('outline', 'safe'),
+			array('title, author, category', 'length', 'max'=>255),
+			array('file, outline', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, title, outline, created_at, updated_at, author, category, file, price', 'safe', 'on'=>'search'),
@@ -69,14 +69,14 @@ class Post extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => 'No.',
 			'title' => 'Title',
 			'outline' => 'Outline',
-			'created_at' => 'Created At',
-			'updated_at' => 'Updated At',
+			'created_at' => 'Create Time',
+			'updated_at' => 'Update Time',
 			'author' => 'Author',
 			'category' => 'Category',
-			'file' => 'File',
+			'file' => 'Content',
 			'price' => 'Price',
 		);
 	}

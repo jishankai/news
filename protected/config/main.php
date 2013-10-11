@@ -7,8 +7,10 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
-	// preloading 'log' component
+	'name'=>'新聞',
+    'theme'=>'blackboot',
+    'defaultController'=>'site/login',
+    // preloading 'log' component
 	'preload'=>array('log'),
 
 	// autoloading model and component classes
@@ -52,8 +54,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=127.0.0.1;dbname=news',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'skji',
+			'password' => 'skji',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -84,6 +86,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'jishankai@gmail.com',
 	),
 );

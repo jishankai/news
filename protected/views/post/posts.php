@@ -1,14 +1,3 @@
-<?php
-/* @var $this PostController */
+<h1><?php echo $post['title']; ?></h1>
 
-$this->breadcrumbs=array(
-	'Post'=>array('/post'),
-	'Posts',
-);
-?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
-
-<p>
-	You may change the content of this page by modifying
-	the file <tt><?php echo __FILE__; ?></tt>.
-</p>
+<?php echo $post['file']; ?>

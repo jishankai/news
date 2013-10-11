@@ -70,6 +70,8 @@ class PostController extends Controller
 		if(isset($_POST['Post']))
 		{
 			$model->attributes=$_POST['Post'];
+            $objDateTime=new DateTime('NOW');
+            $model->created_at=$model->updated_at=$objDateTime->format('c');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -94,6 +96,8 @@ class PostController extends Controller
 		if(isset($_POST['Post']))
 		{
 			$model->attributes=$_POST['Post'];
+            $objDateTime=new DateTime('NOW');
+            $model->updated_at=$objDateTime->format('c');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

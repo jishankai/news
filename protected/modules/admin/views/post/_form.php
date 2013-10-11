@@ -16,12 +16,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id'); ?>
-		<?php echo $form->textField($model,'id',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
 		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'title'); ?>
@@ -31,18 +25,6 @@
 		<?php echo $form->labelEx($model,'outline'); ?>
 		<?php echo $form->textArea($model,'outline',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'outline'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'created_at'); ?>
-		<?php echo $form->textField($model,'created_at'); ?>
-		<?php echo $form->error($model,'created_at'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'updated_at'); ?>
-		<?php echo $form->textField($model,'updated_at'); ?>
-		<?php echo $form->error($model,'updated_at'); ?>
 	</div>
 
 	<div class="row">
@@ -59,7 +41,14 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'file'); ?>
-		<?php echo $form->textField($model,'file',array('size'=>60,'maxlength'=>255)); ?>
+        <?php $this->widget('application.extensions.tinymce.ETinyMce', 
+            array(
+                'model'=>$model,
+                'attribute'=>'file',
+                'editorTemplate'=>'full',
+                'htmlOptions'=>array('rows'=>6, 'cols'=>50, 'class'=>'tinymce'),
+            ));?>
+		<?php //echo $form->textField($model,'file',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'file'); ?>
 	</div>
 

@@ -56,6 +56,11 @@
 		<?php echo $form->textField($model,'price',array('size'=>10,'maxlength'=>10)); ?>
 	</div>
 
+    <div class="row">
+		<?php echo $form->labelEx($model,'publish'); ?>
+		<?php echo $form->dropDownList($model,'publish',array(0=>'FALSE',1=>'TRUE')); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

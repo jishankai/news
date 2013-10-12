@@ -1,25 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "posts".
+ * This is the model class for table "images".
  *
- * The followings are the available columns in table 'posts':
- * @property string $id
- * @property string $title
- * @property string $outline
+ * The followings are the available columns in table 'images':
+ * @property integer $id
+ * @property string $file
  * @property string $created_at
  * @property string $updated_at
- * @property string $author
- * @property string $category
- * @property string $file
- * @property string $price
+ * @property string $post_id
  */
-class Post extends CActiveRecord
+class Image extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Post the static model class
+	 * @return Image the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -31,7 +27,7 @@ class Post extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'posts';
+		return 'images';
 	}
 
 	/**
@@ -42,13 +38,14 @@ class Post extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, outline, author', 'required'),
-			array('id, price', 'length', 'max'=>10),
-			array('title, author, category', 'length', 'max'=>255),
-			array('file, outline', 'safe'),
+			array('file', 'required'),
+			array('id', 'numerical', 'integerOnly'=>true),
+			array('file', 'length', 'max'=>255),
+			array('post_id', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, outline, created_at, updated_at, author, category, file, price, publish', 'safe', 'on'=>'search'),
+			array('id, file, created_at, updated_at, post_id', 'safe', 'on'=>'search'),
+            array('file', 'file', 'types' => 'jpg,jpeg,png,gif', 'allowEmpty' => true),
 		);
 	}
 
@@ -69,16 +66,11 @@ class Post extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'No.',
-			'title' => 'Title',
-			'outline' => 'Outline',
+			'id' => 'ID',
+			'file' => 'File',
 			'created_at' => 'Create Time',
 			'updated_at' => 'Update Time',
-			'author' => 'Author',
-			'category' => 'Category',
-			'file' => 'Content',
-            'price' => 'Price',
-            'publish' => 'Published',
+			'post_id' => 'Post',
 		);
 	}
 
@@ -93,19 +85,18 @@ class Post extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('outline',$this->outline,true);
+        $criteria->compare('id',$this->id);
+		$criteria->compare('file',$this->file,true);
 		$criteria->compare('created_at',$this->created_at,true);
 		$criteria->compare('updated_at',$this->updated_at,true);
-		$criteria->compare('author',$this->author,true);
-		$criteria->compare('category',$this->category,true);
-		$criteria->compare('file',$this->file,true);
-		$criteria->compare('price',$this->price,true);
-        $criteria->compare('publish',$this->publish,true);
+		$criteria->compare('post_id',$this->post_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function showThumbnail(){
+        return CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$this->post_id.'_'.$this->file,$this->file,array('width'=>'200px','max-height'=>'200px'));
+    }
 }

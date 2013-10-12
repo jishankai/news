@@ -29,6 +29,7 @@ $this->menu=array(
 		'author',
 		'category',
 		'file',
-		'price',
+        'price',
+        'publish',
 	),
 )); ?>

@@ -9,7 +9,7 @@ class PostController extends Controller
 
     public function actionLatestPosts()
     {
-        $latest = Yii::app()->db->createCommand("SELECT * FROM posts ORDER BY id DESC LIMIT 20")->queryAll();
+        $latest = Yii::app()->db->createCommand("SELECT * FROM posts WHERE publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
         $this->echoJson($latest);
     }
 
@@ -27,10 +27,17 @@ class PostController extends Controller
 
     public function actionPrevious($id)
     {
-        $previous = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id<$id ORDER BY id DESC LIMIT 20")->queryAll();
+        $previous = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id<$id and publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
         $this->echoJson($previous);
     }
 
+    public function actionImage($id) {
+        $images =  Yii::app()->db->createCommand("SELECT id, file, post_id FROM images WHERE post_id=$id")->queryAll();
+        foreach ($images as $key=>$image) {
+            $images[$key]['url'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$image['post_id'].'_'.$image['file']; 
+        }
+        $this->echoJson($images);
+    }
     // Uncomment the following methods and override them if needed
     /*
     public function filters()

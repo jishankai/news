@@ -58,6 +58,12 @@
 		<?php echo $form->error($model,'price'); ?>
 	</div>
 
+    <div class="row">
+		<?php echo $form->labelEx($model,'publish'); ?>
+		<?php echo $form->dropDownList($model,'publish',array(0=>'FALSE',1=>'TRUE')); ?>
+		<?php echo $form->error($model,'publish'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

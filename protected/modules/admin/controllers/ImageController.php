@@ -1,6 +1,6 @@
 <?php
 
-class PostController extends Controller
+class ImageController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -62,18 +62,21 @@ class PostController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Post;
+		$model=new Image;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Post']))
+		if(isset($_POST['Image']))
 		{
-			$model->attributes=$_POST['Post'];
+			$model->attributes=$_POST['Image'];
+            $model->file = CUploadedFile::getInstance($model,'file');
             $objDateTime=new DateTime('NOW');
             $model->created_at=$model->updated_at=$objDateTime->format('Y-m-d H:i:s');
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()) {
+                $model->file->saveAs(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+                $this->redirect(array('view','id'=>$model->id));
+            }
 		}
 
 		$this->render('create',array(
@@ -93,13 +96,17 @@ class PostController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Post']))
+		if(isset($_POST['Image']))
 		{
-			$model->attributes=$_POST['Post'];
+			$model->attributes=$_POST['Image'];
+            unlink(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
             $objDateTime=new DateTime('NOW');
             $model->updated_at=$objDateTime->format('Y-m-d H:i:s');
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+            $model->file = CUploadedFile::getInstance($model,'file');
+			if($model->save()) {
+                $model->file->saveAs(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+                $this->redirect(array('view','id'=>$model->id));
+            }
 		}
 
 		$this->render('update',array(
@@ -113,8 +120,10 @@ class PostController extends Controller
 	 * @param integer $id the ID of the model to be deleted
 	 */
 	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
+    {
+        $model = $this->loadModel($id);
+        unlink(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+        $model->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -126,7 +135,7 @@ class PostController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Post');
+		$dataProvider=new CActiveDataProvider('Image');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -137,10 +146,10 @@ class PostController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Post('search');
+		$model=new Image('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Post']))
-			$model->attributes=$_GET['Post'];
+		if(isset($_GET['Image']))
+			$model->attributes=$_GET['Image'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -151,12 +160,12 @@ class PostController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Post the loaded model
+	 * @return Image the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Post::model()->findByPk($id);
+		$model=Image::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -164,11 +173,11 @@ class PostController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Post $model the model to be validated
+	 * @param Image $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='post-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='image-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

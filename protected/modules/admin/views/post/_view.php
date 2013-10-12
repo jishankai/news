@@ -43,5 +43,8 @@
 	<br />
 
 	*/ ?>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('publish')); ?>:</b>
+	<?php echo CHtml::encode($data->publish); ?>
+	<br />
 
 </div>

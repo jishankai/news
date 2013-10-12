@@ -17,6 +17,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+        'application.helpers.*',
 	),
 
 	'modules'=>array(
@@ -54,8 +55,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=127.0.0.1;dbname=news',
 			'emulatePrepare' => true,
-			'username' => 'skji',
-			'password' => 'skji',
+			'username' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -79,6 +80,13 @@ return array(
 		),
         'mobiledetect'=>array(
             'class' => 'ext.MobileDetect.MobileDetect'
+        ),
+        'image'=>array(
+            'class'=>'application.extensions.image.CImageComponent',
+            // GD or ImageMagick
+            'driver'=>'GD',
+            // ImageMagick setup path
+            'params'=>array('directory'=>'/opt/local/bin'),
         ),
 	),
 

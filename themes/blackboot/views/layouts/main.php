@@ -52,6 +52,8 @@
 						'activeCssClass'	=> 'active',
 						'items'=>array(
 							array('label'=>'登録', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+                            array('label'=>'文章', 'url'=>array('/admin/post/index'), 'visible'=>!Yii::app()->user->isGuest),
+                            array('label'=>'图片', 'url'=>array('/admin/image/index'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'登出 ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 						),
 					)); ?>

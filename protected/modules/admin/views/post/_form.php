@@ -14,6 +14,7 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
+    <?php echo $form->hiddenField($model, 'id');?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
@@ -37,6 +38,12 @@
 		<?php echo $form->labelEx($model,'category'); ?>
 		<?php echo $form->textField($model,'category',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'category'); ?>
+	</div>
+
+	<div class="row">
+    <label>ImageURL:</label> 
+    <?php echo $form->dropDownList($model,'id',CHtml::listData(Images::model()->findAllByAttributes(array('post_id'=>$model->id)), 'id', 'file')); ?>
+    <?php echo Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$model->id.'_'?>
 	</div>
 
 	<div class="row">

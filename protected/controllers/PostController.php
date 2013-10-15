@@ -34,7 +34,7 @@ class PostController extends Controller
     public function actionImage($id) {
         $images =  Yii::app()->db->createCommand("SELECT id, file, post_id FROM images WHERE post_id=$id")->queryAll();
         foreach ($images as $key=>$image) {
-            $images[$key]['url'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$image['post_id'].'_'.$image['file']; 
+            $images[$key]['url'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$image['post_id'].'_'.$image['file']; 
         }
         $this->echoJson($images);
     }

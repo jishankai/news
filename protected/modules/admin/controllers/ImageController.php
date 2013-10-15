@@ -62,19 +62,23 @@ class ImageController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Image;
+		$model=new Images;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Image']))
+		if(isset($_POST['Images']))
 		{
-			$model->attributes=$_POST['Image'];
+			$model->attributes=$_POST['Images'];
             $model->file = CUploadedFile::getInstance($model,'file');
             $objDateTime=new DateTime('NOW');
             $model->created_at=$model->updated_at=$objDateTime->format('Y-m-d H:i:s');
 			if($model->save()) {
-                $model->file->saveAs(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
+                $model->file->saveAs($path);
+                $thumbImage = Yii::app()->image->load($path);
+                $thumbImage->resize(200, 200);
+                $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->post_id.'_'.$model->file);
                 $this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -96,15 +100,19 @@ class ImageController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Image']))
+		if(isset($_POST['Images']))
 		{
-			$model->attributes=$_POST['Image'];
+			$model->attributes=$_POST['Images'];
             unlink(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
             $objDateTime=new DateTime('NOW');
             $model->updated_at=$objDateTime->format('Y-m-d H:i:s');
             $model->file = CUploadedFile::getInstance($model,'file');
 			if($model->save()) {
-                $model->file->saveAs(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
+                $model->file->saveAs($path);
+                $thumbImage = Yii::app()->image->load($path);
+                $thumbImage->resize(200, 200);
+                $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->post_id.'_'.$model->file);
                 $this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -135,7 +143,7 @@ class ImageController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Image');
+		$dataProvider=new CActiveDataProvider('Images');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -146,10 +154,10 @@ class ImageController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Image('search');
+		$model=new Images('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Image']))
-			$model->attributes=$_GET['Image'];
+			$model->attributes=$_GET['Images'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -160,12 +168,12 @@ class ImageController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Image the loaded model
+	 * @return Images the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Image::model()->findByPk($id);
+		$model=Images::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -173,7 +181,7 @@ class ImageController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Image $model the model to be validated
+	 * @param Images $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{

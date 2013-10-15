@@ -1,6 +1,6 @@
 <?php
 /* @var $this ImageController */
-/* @var $data Image */
+/* @var $data Images */
 ?>
 
 <div class="view">

@@ -1,6 +1,6 @@
 <?php
 /* @var $this ImageController */
-/* @var $model Image */
+/* @var $model Images */
 
 $this->breadcrumbs=array(
 	'Images'=>array('index'),

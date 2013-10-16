@@ -53,10 +53,10 @@ return array(
          */
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=127.0.0.1;dbname=news',
+			'connectionString' => 'mysql:host=127.0.0.1;dbname=development',
 			'emulatePrepare' => true,
-			'username' => 'skji',
-			'password' => 'skji',
+			'username' => 'root',
+			'password' => 'root',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(

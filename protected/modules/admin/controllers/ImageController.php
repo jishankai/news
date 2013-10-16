@@ -103,7 +103,10 @@ class ImageController extends Controller
 		if(isset($_POST['Images']))
 		{
 			$model->attributes=$_POST['Images'];
-            unlink(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+            $file =Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
+            if (file_exists($file)) {
+                unlink($file);
+            }
             $objDateTime=new DateTime('NOW');
             $model->updated_at=$objDateTime->format('Y-m-d H:i:s');
             $model->file = CUploadedFile::getInstance($model,'file');

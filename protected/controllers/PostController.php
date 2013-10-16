@@ -9,7 +9,7 @@ class PostController extends Controller
 
     public function actionLatestPosts()
     {
-        $latest = Yii::app()->db->createCommand("SELECT * FROM posts WHERE publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
+        $latest = Yii::app()->db->createCommand("SELECT id, title, outline, created_at, updated_at, author, category, price FROM posts WHERE publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
         $this->echoJson($latest);
     }
 
@@ -20,23 +20,27 @@ class PostController extends Controller
             $post = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id=$id")->queryRow();
             $this->render('posts', array('post'=>$post));
         } else {
-            $posts = Yii::app()->db->createCommand("SELECT * FROM posts")->queryAll();
+            $posts = Yii::app()->db->createCommand("SELECT  id, title, outline, created_at, updated_at, author, category, price FROM posts")->queryAll();
             $this->echoJson($posts);
         }
     }
 
     public function actionPrevious($id)
     {
-        $previous = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id<$id and publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
+        $previous = Yii::app()->db->createCommand("SELECT  id, title, outline, created_at, updated_at, author, category, price FROM posts WHERE id<$id and publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
         $this->echoJson($previous);
     }
 
     public function actionImage($id) {
-        $images =  Yii::app()->db->createCommand("SELECT id, file, post_id FROM images WHERE post_id=$id")->queryAll();
-        foreach ($images as $key=>$image) {
-            $images[$key]['url'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$image['post_id'].'_'.$image['file']; 
+        $image =  Yii::app()->db->createCommand("SELECT id, file, post_id FROM images WHERE post_id=$id")->queryRow();
+        $file = Yii::app()->basePath.'/../images/thumb/'.$image['post_id'].'_'.$image['file'];
+        if (file_exists($file)) {
+            $content = file_get_contents($file);
+            $content = utf8_encode($content);
+            $this->echoJson($content);
+        } else {
+            $this->echoJson(array());
         }
-        $this->echoJson($images);
     }
     // Uncomment the following methods and override them if needed
     /*

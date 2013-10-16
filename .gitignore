@@ -1,5 +1,7 @@
 assets/*
 !assets/.gitignore
 protected/runtime/*
+images/thumb/*
+images/upload/*
 !protected/runtime/.gitignore
 protected/data/*.db

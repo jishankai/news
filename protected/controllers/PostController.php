@@ -33,14 +33,18 @@ class PostController extends Controller
 
     public function actionImage($id) {
         $image =  Yii::app()->db->createCommand("SELECT id, file, post_id FROM images WHERE post_id=$id")->queryRow();
+        $image['url'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/../images/thumb/'.$image['post_id'].'_'.$image['file'];
+        $this->echoJson($image);
+        /*
         $file = Yii::app()->basePath.'/../images/thumb/'.$image['post_id'].'_'.$image['file'];
         if (file_exists($file)) {
             $content = file_get_contents($file);
             $content = utf8_encode($content);
-            $this->echoJson($content);
+            echo $content;
         } else {
             $this->echoJson(array());
         }
+        */
     }
     // Uncomment the following methods and override them if needed
     /*

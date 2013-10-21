@@ -72,8 +72,18 @@ class PostController extends Controller
 			$model->attributes=$_POST['Post'];
             $objDateTime=new DateTime('NOW');
             $model->created_at=$model->updated_at=$objDateTime->format('Y-m-d H:i:s');
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+            $model->thumbnail = CUploadedFile::getInstance($model,'thumbnail');
+            if($model->save()) {
+                if (!empty($model->thumbnail)) { 
+                    $type = substr($model->thumbnail->type,strpos($model->thumbnail->type,"/")+1);
+                    $thumbImage = Yii::app()->image->load($model->thumbnail->tempName);
+                    $thumbImage->resize(200, 200);
+                    $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$type);
+                    $model->thumbnail = $model->id.'.'.$type;
+                    $model->saveAttributes(array('thumbnail'));
+                }
+                $this->redirect(array('view','id'=>$model->id));
+            }
 		}
 
 		$this->render('create',array(
@@ -92,14 +102,23 @@ class PostController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Post']))
 		{
 			$model->attributes=$_POST['Post'];
             $objDateTime=new DateTime('NOW');
             $model->updated_at=$objDateTime->format('Y-m-d H:i:s');
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+            $model->thumbnail = CUploadedFile::getInstance($model,'thumbnail');
+            if($model->save()) {
+                if (!empty($model->thumbnail)) { 
+                    $type = substr($model->thumbnail->type,strpos($model->thumbnail->type,"/")+1);
+                    $thumbImage = Yii::app()->image->load($model->thumbnail->tempName);
+                    $thumbImage->resize(200, 200);
+                    $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$type);
+                    $model->thumbnail = $model->id.'.'.$type;
+                    $model->saveAttributes(array('thumbnail'));
+                }
+                $this->redirect(array('view','id'=>$model->id));
+            }
 		}
 
 		$this->render('update',array(

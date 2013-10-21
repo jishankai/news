@@ -33,7 +33,11 @@
 	<?php echo CHtml::encode($data->category); ?>
 	<br />
 
-	<?php /*
+    <b><?php echo CHtml::encode($data->getAttributeLabel('thumbnail')); ?>:</b>
+    <?php echo CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$data->id,'',array('width'=>'200px','max-height'=>'200px')); ?>
+    <br />
+
+    <?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('file')); ?>:</b>
 	<?php echo CHtml::encode($data->file); ?>
 	<br />

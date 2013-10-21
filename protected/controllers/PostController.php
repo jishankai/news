@@ -9,7 +9,12 @@ class PostController extends Controller
 
     public function actionLatestPosts()
     {
-        $latest = Yii::app()->db->createCommand("SELECT id, title, outline, created_at, updated_at, author, category, price FROM posts WHERE publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
+        $latest = Yii::app()->db->createCommand("SELECT id, title, outline, created_at, updated_at, author, category, price, (SELECT COUNT(*) FROM images i WHERE i.post_id=p.id) AS images_count, thumbnail FROM posts p WHERE publish!=1 ORDER BY id DESC LIMIT 20")->queryAll();
+        foreach ($latest as $key=>$value) {
+            if (!empty($value['thumbnail'])) {
+                $latest[$key]['thumbnail'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$value['thumbnail'];
+            }
+        }
         $this->echoJson($latest);
     }
 
@@ -20,14 +25,24 @@ class PostController extends Controller
             $post = Yii::app()->db->createCommand("SELECT * FROM posts WHERE id=$id")->queryRow();
             $this->render('posts', array('post'=>$post));
         } else {
-            $posts = Yii::app()->db->createCommand("SELECT  id, title, outline, created_at, updated_at, author, category, price FROM posts")->queryAll();
+            $posts = Yii::app()->db->createCommand("SELECT  id, title, outline, created_at, updated_at, author, category, price, (SELECT COUNT(*) FROM images i WHERE i.post_id=p.id) AS images_count, thumbnail FROM posts p")->queryAll();
+            foreach ($posts as $key=>$value) {
+                if (!empty($value['thumbnail'])) {
+                    $posts[$key]['thumbnail'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$value['thumbnail'];
+                }
+            }
             $this->echoJson($posts);
         }
     }
 
     public function actionPrevious($id)
     {
-        $previous = Yii::app()->db->createCommand("SELECT  id, title, outline, created_at, updated_at, author, category, price FROM posts WHERE id<$id and publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
+        $previous = Yii::app()->db->createCommand("SELECT  id, title, outline, created_at, updated_at, author, category, price, (SELECT COUNT(*) FROM images i WHERE i.post_id=p.id) AS images_count, thumbnail FROM posts p WHERE id<$id and publish!=0 ORDER BY id DESC LIMIT 20")->queryAll();
+        foreach ($previous as $key=>$value) {
+            if (!empty($value['thumbnail'])) {
+                $previous[$key]['thumbnail'] = Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$value['thumbnail'];
+            }
+        }
         $this->echoJson($previous);
     }
 

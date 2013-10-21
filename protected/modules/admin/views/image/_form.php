@@ -13,7 +13,7 @@
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
-    <?php echo $form->hiddenField($model, 'id');?>
+    <?php echo $form->hiddenField($model,'id'); ?>
     <div>
         <?php echo $model->showThumbnail(); ?>
     </div>

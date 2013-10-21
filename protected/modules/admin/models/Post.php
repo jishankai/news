@@ -45,10 +45,11 @@ class Post extends CActiveRecord
 			array('title, outline, author', 'required'),
 			array('id, price', 'length', 'max'=>10),
 			array('title, author, category', 'length', 'max'=>255),
-			array('file, outline', 'safe'),
+			array('file, outline, thumbnail', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, outline, created_at, updated_at, author, category, file, price, publish', 'safe', 'on'=>'search'),
+			array('id, title, outline, created_at, updated_at, author, category, file, price, publish, thumbnail', 'safe', 'on'=>'search'),
+            array('thumbnail', 'file', 'types' => 'jpg,jpeg,png,gif', 'allowEmpty' => true),
 		);
 	}
 
@@ -75,7 +76,8 @@ class Post extends CActiveRecord
 			'created_at' => 'Create Time',
 			'updated_at' => 'Update Time',
 			'author' => 'Author',
-			'category' => 'Category',
+            'category' => 'Category',
+            'thumbnail' => 'Thumbnail',
 			'file' => 'Content',
             'price' => 'Price',
             'publish' => 'Published',
@@ -103,8 +105,9 @@ class Post extends CActiveRecord
 		$criteria->compare('file',$this->file,true);
 		$criteria->compare('price',$this->price,true);
         $criteria->compare('publish',$this->publish,true);
-
-		return new CActiveDataProvider($this, array(
+        $criteria->compare('thumbnail',$this->publish,true);
+        
+        return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}

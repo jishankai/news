@@ -73,12 +73,14 @@ class ImageController extends Controller
             $model->file = CUploadedFile::getInstance($model,'file');
             $objDateTime=new DateTime('NOW');
             $model->created_at=$model->updated_at=$objDateTime->format('Y-m-d H:i:s');
-			if($model->save()) {
-                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
+            if($model->save()) {
+                $images_count = Yii::app()->db->createCommand("SELECT COUNT(*) FROM images WHERE post_id=$model->post_id")->queryScalar();
+                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$images_count;
                 $model->file->saveAs($path);
-                $thumbImage = Yii::app()->image->load($path);
-                $thumbImage->resize(200, 200);
-                $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->post_id.'_'.$model->file);
+                
+                $model->file = $model->post_id.'_'.$images_count; 
+                $model->saveAttributes(array('file'));
+                
                 $this->redirect(array('view','id'=>$model->id));
             }
 		}
@@ -113,9 +115,6 @@ class ImageController extends Controller
 			if($model->save()) {
                 $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
                 $model->file->saveAs($path);
-                $thumbImage = Yii::app()->image->load($path);
-                $thumbImage->resize(200, 200);
-                $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->post_id.'_'.$model->file);
                 $this->redirect(array('view','id'=>$model->id));
             }
 		}

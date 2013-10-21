@@ -9,12 +9,13 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'post-form',
 	'enableAjaxValidation'=>false,
+    'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-    <?php echo $form->hiddenField($model, 'id');?>
+    <?php echo $form->hiddenField($model,'id'); ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
@@ -38,6 +39,12 @@
 		<?php echo $form->labelEx($model,'category'); ?>
 		<?php echo $form->textField($model,'category',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'category'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'thumbnail'); ?>
+		<?php echo $form->fileField($model,'thumbnail'); ?>
+		<?php echo $form->error($model,'thumbnail'); ?>
 	</div>
 
 	<div class="row">

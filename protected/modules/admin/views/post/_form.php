@@ -48,12 +48,6 @@
 	</div>
 
 	<div class="row">
-    <label>ImageURL:</label> 
-    <?php echo $form->dropDownList($model,'id',CHtml::listData(Images::model()->findAllByAttributes(array('post_id'=>$model->id)), 'id', 'name')); ?>
-    <?php echo Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'file'); ?>
         <?php $this->widget('application.extensions.tinymce.ETinyMce', 
             array(

@@ -75,11 +75,12 @@ class ImageController extends Controller
             $model->created_at=$model->updated_at=$objDateTime->format('Y-m-d H:i:s');
             if($model->save()) {
                 $images_count = Yii::app()->db->createCommand("SELECT COUNT(*) FROM images WHERE post_id=$model->post_id")->queryScalar();
-                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$images_count;
+                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$images_count.'.'.$model->file->getExtensionName();
                 $model->file->saveAs($path);
                 
-                $model->file = $model->post_id.'_'.$images_count; 
-                $model->saveAttributes(array('file'));
+                $model->name = $model->post_id.'_'.$images_count.'.'.$model->file->getExtensionName(); 
+                $this->echoJson($model);
+                $model->saveAttributes(array('name'));
                 
                 $this->redirect(array('view','id'=>$model->id));
             }
@@ -105,7 +106,7 @@ class ImageController extends Controller
 		if(isset($_POST['Images']))
 		{
 			$model->attributes=$_POST['Images'];
-            $file =Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
+            $file =Yii::app()->basePath.'/../images/upload/'.$model->name;
             if (file_exists($file)) {
                 unlink($file);
             }
@@ -113,7 +114,7 @@ class ImageController extends Controller
             $model->updated_at=$objDateTime->format('Y-m-d H:i:s');
             $model->file = CUploadedFile::getInstance($model,'file');
 			if($model->save()) {
-                $path = Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file;
+                $path = Yii::app()->basePath.'/../images/upload/'.$model->name;
                 $model->file->saveAs($path);
                 $this->redirect(array('view','id'=>$model->id));
             }

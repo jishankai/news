@@ -34,7 +34,7 @@
 	<br />
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('thumbnail')); ?>:</b>
-    <?php echo CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$data->id,'',array('width'=>'200px','max-height'=>'200px')); ?>
+    <?php echo CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$data->thumbnail,'',array('width'=>'200px','max-height'=>'200px')); ?>
     <br />
 
     <?php /*

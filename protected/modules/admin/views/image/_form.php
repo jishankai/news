@@ -7,7 +7,7 @@
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'image-form',
+	'id'=>'images-form',
     'enableAjaxValidation'=>false,
     'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>

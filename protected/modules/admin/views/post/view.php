@@ -30,6 +30,11 @@ $this->menu=array(
 		'category',
 		'file',
         'price',
+        array(
+            'name'=>'thumbnail',
+            'type'=>'raw',
+            'value'=>CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$model->thumbnail,'',array('width'=>'200px','max-height'=>'200px')),
+        ),
         'publish',
 	),
 )); ?>

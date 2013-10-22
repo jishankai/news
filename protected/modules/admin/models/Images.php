@@ -39,12 +39,12 @@ class Images extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('file', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('file', 'length', 'max'=>255),
+			//array('id', 'numerical', 'integerOnly'=>true),
+			array('file, name', 'length', 'max'=>255),
 			array('post_id', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, file, created_at, updated_at, post_id', 'safe', 'on'=>'search'),
+			array('id, file, name, created_at, updated_at, post_id', 'safe', 'on'=>'search'),
             array('file', 'file', 'types' => 'jpg,jpeg,png,gif', 'allowEmpty' => true),
 		);
 	}
@@ -67,7 +67,8 @@ class Images extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'file' => 'File',
+            'file' => 'File',
+            'name' => 'Name',
 			'created_at' => 'Create Time',
 			'updated_at' => 'Update Time',
 			'post_id' => 'Post',
@@ -87,6 +88,7 @@ class Images extends CActiveRecord
 
         $criteria->compare('id',$this->id);
 		$criteria->compare('file',$this->file,true);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('created_at',$this->created_at,true);
 		$criteria->compare('updated_at',$this->updated_at,true);
 		$criteria->compare('post_id',$this->post_id,true);
@@ -97,6 +99,6 @@ class Images extends CActiveRecord
 	}
 
     public function showThumbnail(){
-        return CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$this->post_id.'_'.$this->file,$this->file,array('width'=>'200px','max-height'=>'200px'));
+        return CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$this->name, $this->name, array('width'=>'200px','max-height'=>'200px'));
     }
 }

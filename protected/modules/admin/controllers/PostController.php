@@ -75,11 +75,10 @@ class PostController extends Controller
             $model->thumbnail = CUploadedFile::getInstance($model,'thumbnail');
             if($model->save()) {
                 if (!empty($model->thumbnail)) { 
-                    $type = substr($model->thumbnail->type,strpos($model->thumbnail->type,"/")+1);
                     $thumbImage = Yii::app()->image->load($model->thumbnail->tempName);
                     $thumbImage->resize(200, 200);
-                    $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$type);
-                    $model->thumbnail = $model->id.'.'.$type;
+                    $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$model->thumbnail->getExtensionName());
+                    $model->thumbnail = $model->id.'.'.$model->thumbnail->getExtensionName();
                     $model->saveAttributes(array('thumbnail'));
                 }
                 $this->redirect(array('view','id'=>$model->id));
@@ -110,11 +109,10 @@ class PostController extends Controller
             $model->thumbnail = CUploadedFile::getInstance($model,'thumbnail');
             if($model->save()) {
                 if (!empty($model->thumbnail)) { 
-                    $type = substr($model->thumbnail->type,strpos($model->thumbnail->type,"/")+1);
                     $thumbImage = Yii::app()->image->load($model->thumbnail->tempName);
                     $thumbImage->resize(200, 200);
-                    $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$type);
-                    $model->thumbnail = $model->id.'.'.$type;
+                    $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$model->thumbnail->getExtensionName());
+                    $model->thumbnail = $model->id.'.'.$model->thumbnail->getExtensionName();
                     $model->saveAttributes(array('thumbnail'));
                 }
                 $this->redirect(array('view','id'=>$model->id));

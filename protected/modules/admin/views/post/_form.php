@@ -49,8 +49,8 @@
 
 	<div class="row">
     <label>ImageURL:</label> 
-    <?php echo $form->dropDownList($model,'id',CHtml::listData(Images::model()->findAllByAttributes(array('post_id'=>$model->id)), 'id', 'file')); ?>
-    <?php echo Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'.$model->id.'_'?>
+    <?php echo $form->dropDownList($model,'id',CHtml::listData(Images::model()->findAllByAttributes(array('post_id'=>$model->id)), 'id', 'name')); ?>
+    <?php echo Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/upload/'?>
 	</div>
 
 	<div class="row">

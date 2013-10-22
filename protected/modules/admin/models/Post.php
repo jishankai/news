@@ -45,7 +45,7 @@ class Post extends CActiveRecord
 			array('title, outline, author', 'required'),
 			array('id, price', 'length', 'max'=>10),
 			array('title, author, category', 'length', 'max'=>255),
-			array('file, outline, thumbnail', 'safe'),
+			array('file, outline, thumbnail, publish', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, title, outline, created_at, updated_at, author, category, file, price, publish, thumbnail', 'safe', 'on'=>'search'),

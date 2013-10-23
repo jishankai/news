@@ -67,6 +67,12 @@
 	</div>
 
     <div class="row">
+		<?php echo $form->labelEx($model,'free'); ?>
+		<?php echo $form->dropDownList($model,'free',array(0=>'FALSE',1=>'TRUE')); ?>
+		<?php echo $form->error($model,'free'); ?>
+	</div>
+
+    <div class="row">
 		<?php echo $form->labelEx($model,'publish'); ?>
 		<?php echo $form->dropDownList($model,'publish',array(0=>'FALSE',1=>'TRUE')); ?>
 		<?php echo $form->error($model,'publish'); ?>

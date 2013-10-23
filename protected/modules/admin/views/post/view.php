@@ -35,6 +35,7 @@ $this->menu=array(
             'type'=>'raw',
             'value'=>CHtml::image(Yii::app()->request->hostInfo.Yii::app()->baseUrl.'/images/thumb/'.$model->thumbnail,'',array('width'=>'200px','max-height'=>'200px')),
         ),
+        'free',
         'publish',
 	),
 )); ?>

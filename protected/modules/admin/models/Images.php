@@ -45,7 +45,7 @@ class Images extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, file, name, created_at, updated_at, post_id', 'safe', 'on'=>'search'),
-            array('file', 'file', 'types' => 'jpg,jpeg,png,gif', 'allowEmpty' => true),
+            array('file', 'file', 'types' => 'png', 'allowEmpty' => true),
 		);
 	}
 

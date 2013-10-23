@@ -47,6 +47,10 @@
 	<br />
 
 	*/ ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('free')); ?>:</b>
+	<?php echo CHtml::encode($data->free); ?>
+	<br />
+
     <b><?php echo CHtml::encode($data->getAttributeLabel('publish')); ?>:</b>
 	<?php echo CHtml::encode($data->publish); ?>
 	<br />

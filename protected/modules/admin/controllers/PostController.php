@@ -103,7 +103,10 @@ class PostController extends Controller
 		// $this->performAjaxValidation($model);
 		if(isset($_POST['Post']))
 		{
-			$model->attributes=$_POST['Post'];
+            if (empty($_POST['Post']['thumbnail'])) {
+                $thumbnail = $model->thumbnail;
+            }
+            $model->attributes=$_POST['Post'];
             $objDateTime=new DateTime('NOW');
             $model->updated_at=$objDateTime->format('Y-m-d H:i:s');
             $model->thumbnail = CUploadedFile::getInstance($model,'thumbnail');
@@ -113,6 +116,9 @@ class PostController extends Controller
                     $thumbImage->resize(200, 200);
                     $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$model->thumbnail->getExtensionName());
                     $model->thumbnail = $model->id.'.'.$model->thumbnail->getExtensionName();
+                    $model->saveAttributes(array('thumbnail'));
+                } else if (!empty($thumbnail)) {
+                    $model->thumbnail = $thumbnail;
                     $model->saveAttributes(array('thumbnail'));
                 }
                 $this->redirect(array('view','id'=>$model->id));

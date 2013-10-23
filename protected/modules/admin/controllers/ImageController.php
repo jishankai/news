@@ -133,7 +133,9 @@ class ImageController extends Controller
 	public function actionDelete($id)
     {
         $model = $this->loadModel($id);
-        unlink(Yii::app()->basePath.'/../images/upload/'.$model->post_id.'_'.$model->file);
+        if (file_exists($model->name)) {
+            unlink($model->name);
+        }
         $model->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

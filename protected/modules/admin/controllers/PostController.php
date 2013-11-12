@@ -132,14 +132,16 @@ class PostController extends Controller
 		));
 	}
 
-	/**
+	/**a
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+        $model = $this->loadModel($id);
+        $model->isDeleted = 1;
+        $model->saveAttributes(array("isDeleted"));
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -164,6 +166,7 @@ class PostController extends Controller
 	{
 		$model=new Post('search');
 		$model->unsetAttributes();  // clear any default values
+        $model->isDeleted = 0;
 		if(isset($_GET['Post']))
 			$model->attributes=$_GET['Post'];
 

@@ -43,7 +43,7 @@ class Post extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('title, outline, author', 'required'),
-			array('id, price', 'length', 'max'=>10),
+			array('price', 'length', 'max'=>10),
 			array('title, author, category', 'length', 'max'=>255),
 			array('file, outline, thumbnail, publish', 'safe'),
 			// The following rule is used by search().

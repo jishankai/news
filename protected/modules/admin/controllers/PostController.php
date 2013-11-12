@@ -117,9 +117,11 @@ class PostController extends Controller
                     $thumbImage->save(Yii::app()->basePath.'/../images/thumb/'.$model->id.'.'.$model->thumbnail->getExtensionName());
                     $model->thumbnail = $model->id.'.'.$model->thumbnail->getExtensionName();
                     $model->saveAttributes(array('thumbnail'));
-                } else if (!empty($thumbnail)) {
-                    $model->thumbnail = $thumbnail;
-                    $model->saveAttributes(array('thumbnail'));
+                } else {
+                    if (!empty($thumbnail)) {
+                        $model->thumbnail = $thumbnail;
+                        $model->saveAttributes(array('thumbnail'));
+                    }
                 }
                 $this->redirect(array('view','id'=>$model->id));
             }

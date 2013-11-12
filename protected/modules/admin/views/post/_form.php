@@ -37,7 +37,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'category'); ?>
-		<?php echo $form->textField($model,'category',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->dropDownList($model,'category',array(0=>'報告',1=>'データ',2=>'映像',3=>'コラム',4=>'ライフ',)); ?>
 		<?php echo $form->error($model,'category'); ?>
 	</div>
 
